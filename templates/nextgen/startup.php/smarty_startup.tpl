@@ -8,6 +8,8 @@
         <!--
         <a href="zxing://scan/?ret={if isset($smarty.server.HTTPS)}https{else}http{/if}%3A%2F%2F{$smarty.server.HTTP_HOST|escape:'url'}{$relative_path|escape:'url'}show_part_info.php%3Fbarcode%3D%7BCODE%7D&SCAN_FORMATS=EAN_8" class="link-anchor">Barcode Scan</a>
         -->
+        <p></p>
+        <a class="btn btn-primary btn-lg link-anchor" href="https://github.com/do9jhb/Part-DB/wiki">{t}Mehr Infos und Hilfe{/t}</a>
     </div>
     
     {if isset($database_update) && $database_update}
