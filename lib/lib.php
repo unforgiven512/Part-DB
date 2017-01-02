@@ -112,7 +112,7 @@
     }
 
 
-    function treeview_node($name, $href=null, $nodes = null, $icon = null )
+    function treeview_node($name, $href=null, $nodes = null, $icon = null, $external_link = false )
     {
         $ret = array('text' => $name);
 
@@ -130,9 +130,13 @@
             $ret['nodes'] = $nodes;
         }
 
-        if(isset($icon))
-        {
+        if(isset($icon)) {
             $ret['icon'] = $icon;
+        }
+
+        if($external_link)
+        {
+            $ret['external_link'] = true;
         }
 
         return $ret;
