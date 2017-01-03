@@ -146,8 +146,9 @@ class API
         if(!$disable_labels) $tools_nodes[] = treeview_node(_("Labels"),BASE_RELATIVE."/tools_labels.php");
         if(!$disable_calculator) $tools_nodes[] = treeview_node(_("Widerstandsrechner"),BASE_RELATIVE."/tools_calculator.php");
         if(!$disable_footprint) $tools_nodes[] = treeview_node(_("Footprints"),BASE_RELATIVE."/tools_footprints.php");
-        if(!$disable_iclogos) $tools_nodes[] = treeview_node(_("IC-Logos"),BASE_RELATIVE."/tools_iclogos.php");
         if($footprint_3d) $tools_nodes[] = treeview_node(_("3D Footprints"),BASE_RELATIVE."/tools_3d_footprints.php");
+        if(!$disable_iclogos) $tools_nodes[] = treeview_node(_("IC-Logos"),BASE_RELATIVE."/tools_iclogos.php");
+
 
         $system_nodes = array();
         $system_nodes[] = treeview_node(_("Konfiguration"),BASE_RELATIVE."/system_config.php");

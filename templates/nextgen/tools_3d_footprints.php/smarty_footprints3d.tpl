@@ -28,11 +28,13 @@
                 </span>
             </div>
 
-            <br>
+            <h4 id="model-path">{t}Bitte Modell auswählen!{/t}</h4>
 
             <x3d class="img-thumbnail"   id="x3d-footprints" showStat="false"
                  showLog="false" >
                 <scene>
+                    <directionalLight id="directional" direction='1 1 1' on ="false" intensity='0.7' > </directionalLight>
+                    <directionalLight id="directional" direction='-1 -1 -1' on ="false" intensity='0.7'> </directionalLight>
                     <inline id="inlineBox" url=""> </inline>
                     <navigationInfo id="head" headlight='true' speed="5.0" type='"EXAMINE"'>  </navigationInfo>
                     <!-- /part-db/models/Buttons_Switches_ThroughHoleSW_DIP_x12_Slide.x3d -->
@@ -46,9 +48,14 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">{t}Licht:{/t}</label>
                     <div class="col-md-9">
-                        <div class="checkbox">
-                            <input type="checkbox" id="activate_headlight" checked="true">
-                            <label>{t}Licht aktiv{/t}</label>
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" id="activate_headlight" checked>
+                            <label>{t}Headlight aktiv{/t}</label>
+                        </div>
+
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" id="activate_dirlight">
+                            <label>{t}Directional light aktiv{/t}</label>
                         </div>
                     </div>
                 </div>
