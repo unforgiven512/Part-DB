@@ -18,7 +18,7 @@ class APIMode
     const SEARCH_PARTS      =   4;
     const TREE_DEVICES      =   5;
     const PART_LABEL        =   6;
-    const MODELS_LIST       =   7;
+    const TREE_MODELS       =   7;
 
 
     public function __construct()
@@ -56,6 +56,10 @@ class APIMode
         else if(strpos($s, "part_label") !== false)
         {
             return APIMode::MODELS_LIST;
+        }
+        else if(strpos($s, "tree_models"))
+        {
+            return APIMode::TREE_MODELS;
         }
         else
         {
