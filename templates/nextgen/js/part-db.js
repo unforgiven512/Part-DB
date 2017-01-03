@@ -25,6 +25,10 @@ function registerLinks() {
         var a = $(this),
             href = a.attr("href");
 
+        // If a link has the no-action class, then do nothing
+        if(a.hasClass("no-action"))
+            return false;
+
         $('#content').hide(0);
         $('#progressbar').show(0);
 
@@ -113,6 +117,71 @@ function tree_fill() {
     });
 }
 
+function onModelNodeSelected(event, data)
+{
+    //$("#x3d-footprints > inline").attr("url", data.href);
+    //x3dom.reload();
+
+    if(data.href != $('#inlineBox').attr('url') && data.href!="")
+    {
+        $('#inlineBox').attr('url', data.href);
+        $('#inlineBox2').attr('url', data.href);
+    }
+
+}
+
+function fill_model_tree()
+{
+    //Check if the treemodel is existing and not initialized.
+    if($("#tree-models").length && $("#tree-models").children().length == 0) {
+
+        $.getJSON(BASE + 'api_json.php?mode="tree_models"', function (tree) {
+            $('#tree-models').treeview({
+                data: tree,
+                enableLinks: false,
+                showBorder: true,
+                onNodeSelected: onModelNodeSelected
+            }).treeview('collapseAll', {silent: true});
+        });
+
+        var search = function () {
+            var term = $("#modelselect-search").val();
+            if (term == "") {
+                $("#tree-models").treeview('clearSearch');
+            }
+            else {
+                $('#tree-models').treeview('search', [term, {
+                    ignoreCase: true,     // case insensitive
+                    exactMatch: false,    // like or equals
+                    revealResults: true,  // reveal matching nodes
+                    hideOthers: true
+                }]);
+            }
+        };
+
+        $("#modelselect-search").change(search);
+        $("#modelselect-search-btn").click(search);
+
+        $("#modelselect-search-clear").click(function(){
+            $("#tree-models").treeview('clearSearch');
+            $("#modelselect-search").val("");
+        });
+
+        $('#activate_headlight').change(function () {
+            $("#head").attr("headlight", $("#activate_headlight").prop("checked"));
+        })
+
+        $('#bg-color').change(function() {
+            $('#x3d-footprints').css('background-color', $('#bg-color').val());
+            //x3dom.reload();
+        });
+
+        $('#speed-slider').change(function () {
+            $("#head").attr("speed", $("#speed-slider").val());
+        });
+    }
+}
+
 function bbcode_edit() {
     // Create the editor
     $("textarea").sceditor({
@@ -153,6 +222,8 @@ $(document).ready(function () {
     treeview_btn_init();
     registerForm();
     registerLinks();
+
+    fill_model_tree();
 
     //bbcode_edit();
     
@@ -227,6 +298,13 @@ window.onpopstate = function (event) {
 };
 
 
+function x3dom_auto_width() {
+    //$.each($("x3d > canvas"), function () {
+    //   $(this).width($(this).parent().width());
+    //});
+    $("x3d > canvas").width($("x3d > canvas").parent().width());
+}
+
 $(document).ajaxComplete(function (event, xhr, settings) {
     'use strict';
 
@@ -242,6 +320,11 @@ $(document).ajaxComplete(function (event, xhr, settings) {
     makeFileInput();
     registerHoverImages();
     scrollUpForMsg();
+
+    fill_model_tree();
+
+    x3dom_auto_width();
+
     
     if ($("x3d").length) {
         x3dom.reload();

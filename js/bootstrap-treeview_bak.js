@@ -17,12 +17,6 @@
  * limitations under the License.
  * ========================================================= */
 
-/**
- * Modified by Jan Böhmer in 2017
- * A function to hide non-search results after a search was added.
- * For that use the hideOther: true option on the search function.
- */
-
 ;(function ($, window, document, undefined) {
 
 	/*global jQuery, console*/
@@ -55,8 +49,6 @@
 		selectedBackColor: '#428bca',
 		searchResultColor: '#D9534F',
 		searchResultBackColor: undefined, //'#FFFFFF',
-		//searchResultColor: '#FFFFFF',
-        //searchResultBackColor: '#E95420',
 
 		enableLinks: false,
 		highlightSelected: true,
@@ -524,41 +516,9 @@
 				.addClass(node.state.checked ? 'node-checked' : '')
 				.addClass(node.state.disabled ? 'node-disabled': '')
 				.addClass(node.state.selected ? 'node-selected' : '')
-				.addClass(node.searchResult ? 'search-result' : '')
+				.addClass(node.searchResult ? 'search-result' : '') 
 				.attr('data-nodeid', node.nodeId)
 				.attr('style', _this.buildStyleOverride(node));
-
-
-
-			if(_this.hide_search)
-			{
-                //check if any of its child notes has any search result, when not it can be hided
-                var parent_of_results = false;//node.findNodes('true', 'g', 'searchResult')
-                var ns = node.nodes;
-                for(var n=0;ns && n<ns.length; n++)
-                {
-                    if(ns[n].searchResult)
-                    {
-                        parent_of_results = true;
-                    }
-                }
-
-                //Hide every item that is not a search result nor the parent of results
-                if(!treeItem.hasClass("search-result") && !parent_of_results)
-                {
-                    treeItem.addClass("search-hidden");
-                    treeItem.hide();
-                }
-            }
-            else
-			{
-				if(treeItem.hasClass("search-hidden"))
-				{
-					treeItem.removeClass("search-hidden");
-					treeItem.show();
-				}
-			}
-
 
 			// Add indent/spacer to mimic tree structure
 			for (var i = 0; i < (level - 1); i++) {
@@ -1170,10 +1130,6 @@
 			})
 		}
 
-        if (options.hideOthers) {
-            this.hide_search = true;
-        }
-
 		// If revealResults, then render is triggered from revealNode
 		// otherwise we just call render.
 		if (options.revealResults) {
@@ -1182,8 +1138,6 @@
 		else {
 			this.render();
 		}
-
-
 
 		this.$element.trigger('searchComplete', $.extend(true, {}, results));
 
@@ -1201,12 +1155,10 @@
 			node.searchResult = false;
 		});
 
-        this.hide_search = false;
-
 		if (options.render) {
 			this.render();	
 		}
-
+		
 		this.$element.trigger('searchCleared', $.extend(true, {}, results));
 	};
 

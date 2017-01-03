@@ -46,8 +46,8 @@ class API
                 case APIMode::GET_PART_INFO:
                     $data = $this->getPartInfo($params);
                     break;
-                case APIMode::MODELS_LIST:
-                    $data = $this->listModels($params);
+                case APIMode::TREE_MODELS:
+                    $data = $this->buildModelsTree($params);
                     break;
 
                 default:
@@ -125,6 +125,7 @@ class API
         global $config;
 
         $disable_footprint          =   $config['footprints']['disable'];
+        $footprint_3d               =   $config['foot3d']['active'];
         $disable_manufactur         =   $config['manufacturers']['disable'];
         $disable_devices            =   $config['devices']['disable'];
         $disable_help               =   $config['menu']['disable_help'];
@@ -146,6 +147,7 @@ class API
         if(!$disable_calculator) $tools_nodes[] = treeview_node(_("Widerstandsrechner"),BASE_RELATIVE."/tools_calculator.php");
         if(!$disable_footprint) $tools_nodes[] = treeview_node(_("Footprints"),BASE_RELATIVE."/tools_footprints.php");
         if(!$disable_iclogos) $tools_nodes[] = treeview_node(_("IC-Logos"),BASE_RELATIVE."/tools_iclogos.php");
+        if($footprint_3d) $tools_nodes[] = treeview_node(_("3D Footprints"),BASE_RELATIVE."/tools_3d_footprints.php");
 
         $system_nodes = array();
         $system_nodes[] = treeview_node(_("Konfiguration"),BASE_RELATIVE."/system_config.php");
@@ -209,8 +211,34 @@ class API
 
     }
 
-    private function listModels()
+    private function buildModelsTree()
     {
+        $dirs = find_all_directories(BASE . "/models/");
+
+        $nodes = array();
+
+        //nodes
+        foreach($dirs as $dir)
+        {
+            $files = scandir($dir);
+            $file_nodes = array();
+            foreach ($files as $file)
+            {
+
+                $file_path = str_replace(BASE, BASE_RELATIVE,$dir."/".$file);
+
+                $file = str_replace(BASE."/models/", "", $file);
+                $file = str_replace(".x3d", "", $file);
+                //Remove .. and . from file path
+                if($file!="." && $file!="..") {
+                    $file_nodes[] = treeview_node($file, $file_path);
+                }
+            }
+
+                $nodes[] = treeview_node(str_replace(BASE."/models/", "", $dir),null, $file_nodes);
+        }
+
+        return $nodes;
 
     }
 
