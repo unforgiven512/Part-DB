@@ -126,6 +126,10 @@ function onModelNodeSelected(event, data)
     {
         $('#inlineBox').attr('url', data.href);
         $('#inlineBox2').attr('url', data.href);
+
+        var n = data.href.indexOf("models/");
+
+        $('#model-path').text(data.href.substr(n));
     }
 
 }
@@ -169,6 +173,10 @@ function fill_model_tree()
 
         $('#activate_headlight').change(function () {
             $("#head").attr("headlight", $("#activate_headlight").prop("checked"));
+        })
+
+        $('#activate_dirlight').change(function () {
+            $("directionalLight").attr("on", $("#activate_dirlight").prop("checked"));
         })
 
         $('#bg-color').change(function() {
