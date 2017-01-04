@@ -22,6 +22,8 @@ engines:
               enabled: false
           Controversial/Superglobals:
               enabled: false
+          Controversial/CamelCaseParameterName:
+              enabled: false
   phan:
       enabled: true
       config:
