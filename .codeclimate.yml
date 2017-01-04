@@ -15,7 +15,13 @@ engines:
     enabled: true
     checks:
           Controversial/CamelCaseVariableName:
-            enabled: false
+              enabled: false
+          Controversial/CamelCaseMethodName:
+              enabled: false
+          Controversial/CamelCasePropertyName:
+              enabled: false
+          Controversial/Superglobals:
+              enabled: false
   phan:
       enabled: true
       config:
