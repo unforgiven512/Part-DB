@@ -3,13 +3,12 @@
 /**
  * Class containing abstract functions for building API outputs.
  *
- * class description.
- *
  * @version 1.0
  * @author jbtronics
  */
 class API
 {
+    /* Use JSON as output format */
     const OUTPUT_JSON = 1;
 
     private $format;
@@ -120,6 +119,9 @@ class API
 
     }
 
+    /*
+     * Builds the Tools tree.
+     */
     private function buildToolsTree($params)
     {
         global $config;
