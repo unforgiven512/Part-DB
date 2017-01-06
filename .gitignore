@@ -174,3 +174,4 @@ development/templates_c/
 
 #Models
 models/*
+!models/README.md
