@@ -702,10 +702,10 @@
             return false;
 
         //Dont check if DOCUMENT_ROOT or BASE_RELATIVE are empty, so we dont get a warning about missing delimiter
-        if (!empty(DOCUMENT_ROOT) && mb_strpos($path, DOCUMENT_ROOT) === 0) // $path begins with DOCUMENT_ROOT
+        if (defined(DOCUMENT_ROOT) && mb_strpos($path, DOCUMENT_ROOT) === 0) // $path begins with DOCUMENT_ROOT
             return true;
 
-        if (!empty(BASE_RELATIVE) && mb_strpos($path, BASE_RELATIVE) === 0) // $path begins with BASE_RELATIVE
+        if (defined(BASE_RELATIVE) && mb_strpos($path, BASE_RELATIVE) === 0) // $path begins with BASE_RELATIVE
             return false;
 
         if ((mb_strpos($path, '://') !== false) && ($accept_protocols)) // there is a protocol in $path, like http://, ftp://, ...
