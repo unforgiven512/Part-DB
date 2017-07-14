@@ -282,8 +282,10 @@
             {
                 $this->subelements = array();
 
-                $query_data = $this->database->query('SELECT id FROM '. $this->tablename .
-                                                     ' WHERE parent_id <=> ? ORDER BY name ASC', array($this->get_id()));
+                $query = 'SELECT id FROM '. $this->tablename .
+                    ' WHERE parent_id <=> ? ORDER BY name ASC';
+
+                $query_data = $this->database->query($query, array($this->get_id()));
 
                 $class = get_class($this);
                 foreach ($query_data as $row)

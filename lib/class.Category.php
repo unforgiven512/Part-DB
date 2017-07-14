@@ -189,9 +189,9 @@
          *
          * @throws Exception if there was an error
          */
-        public function get_parts($recursive = false, $hide_obsolete_and_zero = false)
+        public function get_parts($recursive = false, $hide_obsolete_and_zero = false, $pagination = 0, $page = 1)
         {
-            return parent::get_parts('id_category', $recursive, $hide_obsolete_and_zero);
+            return parent::get_parts('id_category', $recursive, $hide_obsolete_and_zero, $pagination, $page);
         }
 
         /********************************************************************************

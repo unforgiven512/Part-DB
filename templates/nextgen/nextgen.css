@@ -158,3 +158,8 @@ table.dataTable tbody th, table.dataTable tbody td {
     align-items: center;
 }
 
+.pagination-no-margin {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+

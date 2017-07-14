@@ -155,7 +155,7 @@
          *
          * @throws Exception if there was an error
          */
-        public function get_parts($parts_rowname, $recursive = false, $hide_obsolete_and_zero = false)
+        public function get_parts($parts_rowname, $recursive = false, $hide_obsolete_and_zero = false, $pagination = 0, $page = 1)
         {
         /*
             if ( ! is_array($this->parts))
@@ -224,7 +224,15 @@
 
                 $query = $query.
                     ' ORDER BY name, description';
-                //$query_data = $this->database->query($query);
+
+                if($pagination > 0)
+                {
+                    $start = $pagination * ($page -1);
+                    $end = $pagination * $page;
+
+                    $query = $query . " LIMIT " . $start . "," . $end;
+                }
+
                 $query_data = $this->database->query($query, $vals);
 
                 foreach ($query_data as $row)
