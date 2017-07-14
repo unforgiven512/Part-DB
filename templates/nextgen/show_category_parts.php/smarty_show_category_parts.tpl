@@ -22,25 +22,33 @@
     </div>
 </div>
 
+{if $pagination > 0}
 <nav aria-label="Page navigation" align="right">
     <ul class="pagination pagination-no-margin">
-        <li>
-            <a href="#" aria-label="Previous">
+        <li {if $page <= 1}class="disabled"{/if}>
+            <a {if $page > 1}href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page - 1}"{/if} aria-label="Previous">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
             </a>
         </li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
+        {if $page <= 1}
+            <li class="active"><a href="#">{$page}</a></li>
+            <li><a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page + 1}">{$page + 1}</a></li>
+            <li><a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page + 2}">{$page + 2}</a></li>
+            <li><a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page + 3}">{$page + 3}</a></li>
+        {else}
+            <li><a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page - 1}">{$page - 1}</a></li>
+            <li class="active"><a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page}">{$page}</a></li>
+            <li><a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page + 1}">{$page + 1}</a></li>
+            <li><a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page + 2}">{$page + 2}</a></li>
+        {/if}
         <li>
-            <a href="#" aria-label="Next">
+            <a href="show_category_parts.php?cid={$cid}&pagination={$pagination}&page={$page + 1}" aria-label="Next">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
         </li>
     </ul>
 </nav>
+{/if}
 
 <div class="panel panel-default">
     <div class="panel-heading">

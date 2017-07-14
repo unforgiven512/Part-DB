@@ -39,6 +39,10 @@
     $with_subcategories = isset($_REQUEST['subcat'])            ? (boolean)$_REQUEST['subcat']          : true;
     $table_rowcount     = isset($_REQUEST['table_rowcount'])    ? (integer)$_REQUEST['table_rowcount']  : 0;
 
+    //Evalute pagination variables
+    $page               = isset($_REQUEST['page'])              ? (integer)$_REQUEST['page']             : 1;
+    $pagination         = isset($_REQUEST['pagination'])        ? (integer)$_REQUEST['pagination']       : 0;
+
     $action = 'default';
     if (isset($_REQUEST['subcat_button']))      {$action = 'change_subcat_state';}
     $selected_part_id = 0;
@@ -153,7 +157,7 @@
     {
         try
         {
-            $parts = $category->get_parts($with_subcategories, true, 50, 1);
+            $parts = $category->get_parts($with_subcategories, true, $pagination, $page);
             $table_loop = Part::build_template_table_array($parts, 'category_parts');
             $html->set_variable('table_rowcount', count($parts), 'integer');
             $html->set_loop('table', $table_loop);
@@ -187,6 +191,10 @@
         $html->set_variable('use_modal_popup',          $config['popup']['modal'], 'boolean');
         $html->set_variable('popup_width',              $config['popup']['width'], 'integer');
         $html->set_variable('popup_height',             $config['popup']['height'], 'integer');
+
+        //Pagination variables
+        $html->set_variable('page',                     $page, 'integer');
+        $html->set_variable('pagination',               $pagination, 'integer');
     }
 
     /********************************************************************************
