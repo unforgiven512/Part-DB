@@ -292,16 +292,27 @@ function registerHoverImages() {
 function makeSortTable() {
     'use strict';
     if (!$.fn.DataTable.isDataTable('.table-sortable')) {
-        $('.table-sortable').DataTable({
-            "paging": false,
-            "ordering": true,
-            "info": false,
-            "searching": false,
-            "order": [],
-            "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false
-                }]
+        $('.table-sortable').each(function () {
+            $(this).DataTable({
+                "paging": false,
+                "ordering": true,
+                "info": false,
+                "searching": false,
+                "fixedHeader": true,
+                "order": [],
+                "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }]
+            });
+            var table = $(this).DataTable();
+            if ($(this).hasClass("fixedHeader")) {
+                table.fixedHeader.enable();
+                table.fixedHeader.headerOffset($("#searchbar").height());
+            }
+            else {
+                table.fixedHeader.disable();
+            }
         });
         //$(".table-sortable").DataTable().fnDraw();
     }

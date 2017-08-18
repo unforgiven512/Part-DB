@@ -4,10 +4,10 @@
  *
  * To rebuild or modify this file with the latest versions of the included
  * software please visit:
- *   https://datatables.net/download/#bs/dt-1.10.15
+ *   https://datatables.net/download/#bs/dt-1.10.15/fh-3.1.2
  *
  * Included libraries:
- *   DataTables 1.10.15
+ *   DataTables 1.10.15, FixedHeader 3.1.2
  */
 
 table.dataTable {
@@ -193,6 +193,28 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:fir
 }
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:last-child {
   padding-right: 0;
+}
+
+
+table.dataTable.fixedHeader-floating,
+table.dataTable.fixedHeader-locked {
+  background-color: white;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+table.dataTable.fixedHeader-floating {
+  position: fixed !important;
+}
+
+table.dataTable.fixedHeader-locked {
+  position: absolute !important;
+}
+
+@media print {
+  table.fixedHeader-floating {
+    display: none;
+  }
 }
 
 

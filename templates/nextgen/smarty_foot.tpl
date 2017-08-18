@@ -35,7 +35,9 @@
 
 
                 <link rel="stylesheet" type="text/css" href="{$relative_path}datatables/datatables.min.css"/>
+                <link rel="stylesheet" type="text/css" href="{$relative_path}datatables/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css">
                 <script type="text/javascript" src="{$relative_path}datatables/datatables.min.js" async></script>
+                <script type="text/javascript" src="{$relative_path}datatables/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js" async></script>
 
                 <!-- Treeview -->
                 <script src="{$relative_path}js/bootstrap-treeview.js" async></script>
