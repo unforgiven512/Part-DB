@@ -65,7 +65,7 @@
                                         <b>{t}Neue Datei hochladen:{/t}</b>
                                     </label>
                                     <div class="col-sm-9">
-                                        <input data-show-caption="false" data-show-upload="false" type="file" class="file" name="attachement_file">
+                                        <input data-show-caption="false" data-show-upload="false" type="file" class="fileinput" name="attachement_file">
                                         <p>(max. {$max_upload_filesize})</p>
                                     </div>  
                                 </div>

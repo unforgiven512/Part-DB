@@ -357,7 +357,7 @@ function makeFiletree() {
  */
 function makeFileInput() {
     'use strict';
-    $(".file").fileinput();
+    $("input[type=file]").fileinput();
 }
 /**
  * Register the button, to jump to the top of the page.

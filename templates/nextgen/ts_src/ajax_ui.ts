@@ -442,7 +442,7 @@ function makeFiletree() {
  */
 function makeFileInput() {
     'use strict';
-    $(".file").fileinput();
+    $("input[type=file]").fileinput();
 }
 
 /**
