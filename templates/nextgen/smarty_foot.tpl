@@ -55,6 +55,9 @@
     <!-- FileInput -->
     <script src="{$relative_path}js/fileinput.min.js" async></script>
 
+    <!-- FileTree -->
+    <script src="{$relative_path}js/jQueryFileTree.min.js" async></script>
+
     <!-- Functions -->
     <script src="{$relative_path}templates/nextgen/js/functions.js" async></script>
     <script src="{$relative_path}templates/nextgen/js/ajax_ui.js" async></script>

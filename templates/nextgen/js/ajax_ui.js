@@ -296,6 +296,7 @@ $(function (event) {
     ajaxui.addStartAction(registerAutoRefresh);
     ajaxui.addStartAction(scrollUpForMsg);
     ajaxui.addStartAction(rightClickSubmit);
+    ajaxui.addStartAction(makeFiletree);
     ajaxui.addAjaxCompleteAction(addCollapsedClass);
     ajaxui.addAjaxCompleteAction(registerHoverImages);
     ajaxui.addAjaxCompleteAction(makeSortTable);
@@ -306,6 +307,7 @@ $(function (event) {
     ajaxui.addAjaxCompleteAction(registerAutoRefresh);
     ajaxui.addAjaxCompleteAction(scrollUpForMsg);
     ajaxui.addAjaxCompleteAction(rightClickSubmit);
+    ajaxui.addAjaxCompleteAction(makeFiletree);
     ajaxui.start();
 });
 /**
@@ -342,6 +344,13 @@ function makeSortTable() {
         });
         //$(".table-sortable").DataTable().fnDraw();
     }
+}
+function makeFiletree() {
+    $('#filetree').fileTree({
+        script: 'jqueryFileTree.php'
+    }, function (file) {
+        alert(file);
+    });
 }
 /**
  * Use jQuery.fileinput for fileinputs.

@@ -46,6 +46,9 @@
         
         <!-- Fileinput -->
         <link href="{$relative_path}css/fileinput.min.css" media="all" rel="stylesheet"/>
+
+        <!-- FileTree -->
+        <link href="{$relative_path}css/jQueryFileTree.min.css" rel="stylesheet">
        
         <!-- Include Part-DB Theme -->
         <link href="{$relative_path}templates/{$theme}/nextgen.css" rel="stylesheet">
