@@ -452,4 +452,26 @@ $app->get("/1.0.0/tree/tools[/]", function ($request, $response, $args) {
     }
 });
 
+/*****************************************************************************
+ * File select trees
+ *****************************************************************************/
+/**
+ * Get the tree for tools
+ */
+$app->post("/1.0.0/fileselect/attachements[/]", function ($request, $response, $args) {
+    /** @var \Slim\Http\Response $response */
+    try {
+        $tree = generateFileSelectTree(BASE . "/data/media");
+        $body = $response->getBody();
+        foreach ($tree as $line)
+        {
+            $body->write($line);
+        }
+        return $response->withBody($body);
+    } catch (Exception $ex) {
+        return generateError($response, "", 500, $ex);
+    }
+});
+
+
 $app->run();

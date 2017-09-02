@@ -431,7 +431,8 @@ function makeSortTable() {
 
 function makeFiletree() {
     $('#filetree').fileTree({
-        script: 'jqueryFileTree.php'
+        script: 'api.php/1.0.0/fileselect/attachements',
+        root: '/'
     }, function(file) {
         alert(file);
     });

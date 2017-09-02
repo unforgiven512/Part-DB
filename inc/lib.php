@@ -1052,3 +1052,58 @@ function isUsingHTTPS() {
         (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
         || $_SERVER['SERVER_PORT'] == 443;
 }
+
+
+/**
+ * Generates a filetree for JQueryFileSelect recursively from the given root.
+ * @param $root string The Root folder, which should be the root folder of the fileselect tree.
+ * @param §ignore_dot bool True if files beginning with a dot (like .gitignore) should be excluded.
+ * @throws Exception If an error happened.
+ * @return string[] Returns a string array containing HTML.
+ */
+function generateFileSelectTree($root, $ignore_dot = true) {
+    if (!$root) {
+        throw new Exception("ERROR: Root filesystem directory not set in jqueryFileTree.php");
+    }
+
+    $lines = array();
+
+    $postDir = rawurldecode($root.(isset($_POST['dir']) ? $_POST['dir'] : null ));
+
+    // set checkbox if multiSelect set to true
+    $checkbox = ( isset($_POST['multiSelect']) && $_POST['multiSelect'] == 'true' ) ? "<input type='checkbox' />" : null;
+    $onlyFolders = ( isset($_POST['onlyFolders']) && $_POST['onlyFolders'] == 'true' ) ? true : false;
+    $onlyFiles = ( isset($_POST['onlyFiles']) && $_POST['onlyFiles'] == 'true' ) ? true : false;
+
+    if (file_exists($postDir)) {
+        $files		= scandir($postDir);
+        $returnDir	= substr($postDir, strlen($root));
+
+        natcasesort($files);
+
+        if (count($files) > 2) {// The 2 accounts for . and ..
+            $lines[] = "<ul class='jqueryFileTree'>";
+
+            foreach ($files as $file) {
+                if ($ignore_dot && 0 === strpos($file, '.')) {
+                    continue;
+                }
+
+                $htmlRel	= htmlentities($returnDir . $file, ENT_QUOTES);
+                $htmlName	= htmlentities($file);
+                $ext		= preg_replace('/^.*\./',  '', $file);
+
+                if( file_exists($postDir . $file) && $file != '.' && $file != '..' ) {
+                    if( is_dir($postDir . $file) && (!$onlyFiles || $onlyFolders) )
+                        $lines[] = "<li class='directory collapsed'>{$checkbox}<a rel='" .$htmlRel. "/'>" . $htmlName . "</a></li>";
+                    else if (!$onlyFolders || $onlyFiles)
+                        $lines[] = "<li class='file ext_{$ext}'>{$checkbox}<a rel='" . $htmlRel . "'>" . $htmlName . "</a></li>";
+                }
+            }
+
+            $lines[] = "</ul>";
+        }
+    }
+
+    return $lines;
+}
