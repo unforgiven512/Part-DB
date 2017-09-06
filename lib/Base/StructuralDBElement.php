@@ -255,16 +255,37 @@ abstract class StructuralDBElement extends AttachementsContainingDBElement
     {
         if (! is_array($this->full_path_strings)) {
             $this->full_path_strings = array();
-            $this->full_path_strings[] = $this->getName();
-            $parent_id = $this->getParentID();
-            $class = get_class($this);
-            while ($parent_id > 0) {
-                /** @var StructuralDBElement $element */
-                $element = new $class($this->database, $this->current_user, $this->log, $parent_id);
-                $parent_id = $element->getParentID();
-                $this->full_path_strings[] = $element->getName();
+
+            //Try to use MySQL Query to get full path
+            $query = "SELECT t5.name AS r1, t4.name AS r2, t3.name AS r3, t2.name AS r4, t1.name AS r5 FROM $this->tablename AS t1 " .
+                "LEFT JOIN $this->tablename AS t2 ON t2.id = t1.parent_id " . //Do many self joins, to emulate recursive joins
+                "LEFT JOIN $this->tablename AS t3 ON t3.id = t2.parent_id " .
+                "LEFT JOIN $this->tablename AS t4 ON t4.id = t3.parent_id " .
+                "LEFT JOIN $this->tablename AS t5 ON t5.id = t4.parent_id " .
+                "WHERE t1.id = ? " .   //This is the ID of the category for which the full path table should be build.
+                "AND (t1.parent_id IS NULL " . //Ensure that one of the categories has Root Category as parent (id = null)
+                "OR t2.parent_id IS NULL " .  //When we got empty results we know the category is deeper than 5 levels
+                "OR t3.parent_id IS NULL " .  //Then we have to build the path the old way.
+                "OR t3.parent_id IS NULL " .
+                "OR t4.parent_id IS NULL " .
+                "OR t5.parent_id IS NULL)";
+
+            $results = $this->database->query($query, array($this->getID()));
+
+            if (count($results == 1)) { //Request was successful when we build
+                $this->full_path_strings = array_filter($results[0]); //Remove any null coloums
+            } else {
+                $this->full_path_strings[] = $this->getName();
+                $parent_id = $this->getParentID();
+                $class = get_class($this);
+                while ($parent_id > 0) {
+                    /** @var StructuralDBElement $element */
+                    $element = new $class($this->database, $this->current_user, $this->log, $parent_id);
+                    $parent_id = $element->getParentID();
+                    $this->full_path_strings[] = $element->getName();
+                }
+                $this->full_path_strings = array_reverse($this->full_path_strings);
             }
-            $this->full_path_strings = array_reverse($this->full_path_strings);
         }
 
         return implode($delimeter, $this->full_path_strings);
