@@ -198,9 +198,11 @@ if ((! $fatal_error) && (! $config['startup']['disable_update_list'])) {
 $html->setLoop('authors', $authors);
 
 if (! $fatal_error) {
-    $bbcode = new \Golonka\BBCode\BBCodeParser();
-    $str = $bbcode->parse(htmlspecialchars($config['startup']['custom_banner']));
-    $html->setVariable('banner', $str, 'string');
+    $parser = new JBBCode\Parser();
+    $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+    $parser->parse(htmlspecialchars($config['startup']['custom_banner']));
+
+    $html->setVariable('banner', $parser->getAsHTML(), 'string');
 
     try {
         $system_version = $system->getInstalledVersion();

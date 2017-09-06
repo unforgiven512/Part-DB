@@ -232,8 +232,10 @@ class Part extends Base\AttachementsContainingDBElement implements Interfaces\IA
         }
 
         if ($parse_bbcode) {
-            $bbcode = new BBCodeParser;
-            $val = $bbcode->only("bold", "italic", "underline", "linethrough")->parse($val);
+            $parser = new \JBBCode\Parser();
+            $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
+            $parser->parse($val);
+            $val = $parser->getAsHTML();
         }
 
         return $val;
@@ -269,8 +271,10 @@ class Part extends Base\AttachementsContainingDBElement implements Interfaces\IA
     {
         $val = htmlspecialchars($this->db_data['comment']);
         if ($parse_bbcode) {
-            $bbcode = new BBCodeParser;
-            $val = $bbcode->parse($val);
+            $parser = new \JBBCode\Parser();
+            $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
+            $parser->parse($val);
+            $val = $parser->getAsHTML();
         }
 
         return $val;
