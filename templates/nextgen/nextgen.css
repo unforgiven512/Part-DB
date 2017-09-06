@@ -4,6 +4,12 @@ body {
     padding-top: 65px;
 }
 
+@media print {
+    body {
+        padding-top: 0;
+    }
+}
+
 .dropdown-menu-radio {
     padding-left: 10px;
 }
@@ -13,7 +19,7 @@ body {
 }
 
 .companypic {
-    width: 23px;
+    width: 17px;
     display: inline;
 }
 
@@ -172,5 +178,91 @@ table.dataTable tbody th, table.dataTable tbody td {
     a.hidden-print-href[href]:after {
         content: none !important;
     }
+}
+
+/*
+    Fance Collapse
+ */
+
+.fancy-collapse-panel .panel-default > .panel-heading {
+    padding: 0;
+}
+
+.panel-heading a[data-toggle=collapse] {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+.panel-heading a[data-toggle=collapse]:after {
+    font-family: "FontAwesome";
+    content: "\f106";
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+    font-weight: 400;
+    top: 50%;
+    line-height: 1;
+    margin-top: -10px;
+}
+
+.panel-heading a[data-toggle=collapse].collapsed:after
+{
+    content: "\f107";
+}
+
+.table-center{
+    text-align: center;
+}
+
+.font-weight-bold {
+    font-weight:bold;
+}
+
+/* Show symbol after exteral links */
+a[target="_blank"].link-external:after {
+    content: "\f08e ";
+    font-family: FontAwesome;
+    margin-left: 3px;
+    font-weight: normal;
+    font-size: smaller;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+}
+
+/** Button outline defintions */
+
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
 }
 

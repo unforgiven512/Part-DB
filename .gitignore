@@ -8,6 +8,7 @@
 
 # ignore Doxygen builds
 development/doxygen/html/
+development/phpdoc/html/
 
 # ignore IDE project files
 *.geany
@@ -170,6 +171,16 @@ development/templates_c/
 
 #PHPStorm
 .idea/
+.idea/*
 
 #Models
 models/*
+
+#Ignore Node Modules
+node_modules/
+node_modules/*
+
+#Ignore composer vendor/ folder
+vendor/*
+
+*.cache

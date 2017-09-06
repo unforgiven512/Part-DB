@@ -56,6 +56,7 @@
                         {if $col.caption=="datasheets"}{if !$disable_auto_datasheets}<th class="no-sort">{t}Datenblätter{/t}</th>{/if}{/if}
                         {if $col.caption=="button_decrement"}<th class="text-center no-sort">-</th>{/if}
                         {if $col.caption=="button_increment"}<th class="text-center no-sort">+</th>{/if}
+                        {if $col.caption=="button_edit"}<th class="text-center no-sort"></th>{/if}
                         {if $col.caption=="order_options"}<th class="no-sort">{t}Optionen{/t}</th>{/if} {*  only for order parts  *}
                         {if $col.caption=="quantity_edit"}<th class="no-sort">{t}Anzahl{/t}</th>{/if} {*  only for device parts  *}
                         {if $col.caption=="mountnames_edit"}<th class="no-sort">{t escape=no}Bestückungs-<br>daten{/t}</th>{/if} {*  only for device parts  *}
@@ -89,7 +90,7 @@
 
                     {if $row.caption =="row"}
                         {* row number *}
-                        <td class="tdrow1">{$row.row}</td>
+                        <td class="tdrow1 table-center">{$row.row}</td>
                     {/if}
                     {if $row.caption =="hover_picture"}
                         {* Pictures *}
@@ -124,7 +125,7 @@
                     {/if}
                     {if $row.caption == "name_edit"}
                         {* name edit *}
-                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:150px" name="name_{$row.row_index}" value="{$row.name}"></td>
+                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:150px;" name="name_{$row.row_index}" value="{$row.name}"></td>
                     {/if}
                     {if $row.caption == "description"}
                         {* description *}
@@ -132,7 +133,7 @@
                     {/if}
                     {if $row.caption == "description_edit"}
                         {* description edit *}
-                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:150px" name="description_{$row.row_index}" value="{$row.description nofilter}"></td>
+                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:150px;" name="description_{$row.row_index}" value="{$row.description nofilter}"></td>
                     {/if}
                     {if $row.caption == "comment"}
                         {* comment *}
@@ -140,7 +141,7 @@
                     {/if}
                     {if $row.caption == "comment_edit"}
                         {* comment edit *}
-                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:150px" name="comment_{$row.row_index}" value="{$row.comment nofilter}"></td>
+                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:150px;" name="comment_{$row.row_index}" value="{$row.comment nofilter}"></td>
                     {/if}
                     {if $row.caption == "name_description"}
                         {* name/comment/description *}
@@ -159,7 +160,7 @@
                     {/if}
                     {if $row.caption == "instock_edit"}
                         {* instock edit *}
-                        <td class="tdrow1"><input type="number" class="form-control input-sm"  name="instock_{$row.row_index}" value="{$row.instock}"></td>
+                        <td class="tdrow1"><input type="number" class="form-control input-sm" style="max-width: 75px;" name="instock_{$row.row_index}" value="{$row.instock}"></td>
                     {/if}
                     {if $row.caption == "order_quantity_edit"}
                         {* order quantity edit (only for order parts)  *}
@@ -176,7 +177,7 @@
                     {/if}
                     {if $row.caption == "mininstock_edit"}
                         {* instock edit *}
-                        <td class="tdrow1"><input type="number" min="0" class="form-control input-sm" name="mininstock_{$row.row_index}" value="{$row.mininstock}"></td>
+                        <td class="tdrow1"><input type="number" min="0" class="form-control input-sm" style="max-width: 75px;" name="mininstock_{$row.row_index}" value="{$row.mininstock}"></td>
                     {/if}
                     {if $row.caption == "instock_mininstock"}
                         {* instock/mininstock *}
@@ -187,57 +188,57 @@
                     {if $row.caption == "category"}
                         {* category *}
                         <td class="tdrow1">
-                            <div data-toggle="tooltip" title="{$row.category_path}">{$row.category_name}</div>
+                            <a href="show_category_parts.php?cid={$row.category_id}" title="{$row.category_path}">{$row.category_name}</a>
                         </td>
                     {/if}
                     {if $row.caption == "category_edit"}
                         {* category edit *}
-                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px" name="category_{$row.row_index}" value="{$row.category_name}"></td>
+                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px;" name="category_{$row.row_index}" value="{$row.category_name}"></td>
                     {/if}
                     {if !$disable_footprints}
                         {if $row.caption == "footprint"}
                             {* footprint *}
                             <td class="tdrow1">
                             {if isset($row.footprint_path)}
-                                <div title="{$row.footprint_path}">{$row.footprint_name}</div>
+                                <a href="show_footprint_parts.php?fid={$row.footprint_id}&subfoot=0" title="{$row.footprint_path}">{$row.footprint_name}</a>
                             {/if}
                             </td>
                         {/if}
                         {if $row.caption == "footprint_edit"}
                             {* footprint edit (only for import parts) *}
-                            <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px" name="footprint_{$row.row_index}" value="{$row.footprint_name}"></td>
+                            <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px;" name="footprint_{$row.row_index}" value="{$row.footprint_name}"></td>
                         {/if}
                     {/if}
                     {if !isset($disable_manufacturers) || !$disable_manufacturers }
                         {if $row.caption == "manufacturer"}
                             {* manufacturer *}
                             <td class="tdrow1">
-                                <div title="{$row.manufacturer_path}">{$row.manufacturer_name}</div>
+                                <a href="show_manufacturer_parts.php?mid={$row.manufacturer_id}&subman=0" title="{$row.manufacturer_path}">{$row.manufacturer_name}</a>
                             </td>
                         {/if}
                         {if $row.caption == "manufacturer_edit"}
                             {* manufacturer edit *}
-                            <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px" name="manufacturer_{$row.row_index}" value="{$row.manufacturer_name}"></td>
+                            <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px;" name="manufacturer_{$row.row_index}" value="{$row.manufacturer_name}"></td>
                         {/if}
                     {/if}
                     {if $row.caption == "storelocation"}
                         {* storelocation *}
                         <td class="tdrow1" id="location">
                             {if isset($row.storelocation_path)}
-                            <div title="{$row.storelocation_path}">{$row.storelocation_name}</div>
+                            <a href="show_location_parts.php?lid={$row.storelocation_id}&subloc=0" title="{$row.storelocation_path}">{$row.storelocation_name}</a>
                             {/if}
                         </td>
                     {/if}
                     {if $row.caption == "storelocation_edit"}
                         {* storelocation edit *}
-                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px" name="storelocation_{$row.row_index}" value="{$row.storelocation_name}"></td>
+                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px;" name="storelocation_{$row.row_index}" value="{$row.storelocation_name}"></td>
                     {/if}
                     {if $row.caption == "datasheets"}
                         {if !$disable_auto_datasheets}
                             {* datasheet links with icons *}
                             <td class="tdrow5" nowrap>
                                 {foreach $row.datasheets as $sheet }
-                                    <a class="link-external" title="{$sheet.name}" href="{$sheet.url}" target="_blank"><img class="companypic" src="{$relative_path}{$sheet.image}" alt="{$sheet.name}"></a>
+                                    <a class="link-datasheet datasheet" title="{$sheet.name}" href="{$sheet.url}" target="_blank"><img class="companypic" src="{$relative_path}{$sheet.image}" alt="{$sheet.name}"></a>
                                 {/foreach}
                             </td>
                         {/if}
@@ -245,15 +246,20 @@
                     {if $row.caption == "button_decrement"}
                         {* build the "-" button, only if more than 0 parts on stock *}
                         <td class="tdrow6">
-                            <button type="submit" class="btn btn-sm btn-outline-secondary" name="decrement_{$row.row_index}" {if $row.decrement_disabled}disabled="disabled"{/if}><span class="glyphicon glyphicon-minus"></span></button>
+                            <button type="submit" class="btn btn-xs btn-default btn-outline" name="decrement_{$row.row_index}" {if $row.decrement_disabled}disabled="disabled"{/if}><i class="fa fa-minus" aria-hidden="true"></i></span></button>
                         </td>
                     {/if}
                     {if $row.caption == "button_increment"}
                         {* build the "+" button *}
                         <td class="tdrow7">
-                            <button type="submit" class="btn btn-sm btn-outline-secondary" name="increment_{$row.row_index}"><span class="glyphicon glyphicon-plus"></span></button>
+                            <button type="submit" class="btn btn-xs btn-default btn-outline" name="increment_{$row.row_index}"><i class="fa fa-plus" aria-hidden="true"></i></span></button>
                         </td>
-                    {/if} 
+                    {/if}
+                    {if $row.caption == "button_edit"}
+                        <td class="tdrow7">
+                            <a class="btn btn-xs btn-default btn-outline" href="{$relative_path}edit_part_info.php?pid={$row.id}"><i class="fa fa-pencil" aria-hidden="true"></i></span></a>
+                        </td>
+                    {/if}
                     {if $row.caption == "order_options"}
                         {* build the order options (e.g. the "to stock" checkbox) (only for order parts) *}
                         <td class="tdrow1" class="form-control" nowrap>
@@ -273,7 +279,7 @@
                         {* quantity for DevicePart elements *}
                         <td class="tdrow1" nowrap>
                            <div class="input-group">
-                                <input type="text" class="form-control input-sm" style="width:45px" name="quantity_{$row.row_index}" value="{if isset($row.quantity)}{$row.quantity}{else}0{/if}">
+                                <input type="text" class="form-control input-sm" style="width:45px;" name="quantity_{$row.row_index}" value="{if isset($row.quantity)}{$row.quantity}{else}0{/if}">
                                 <div class="input-group-btn">
                                     <button class="btn btn-default btn-sm" type="button" onClick="elements['quantity_{$row.row_index}'].value=0">
                                     <span class="glyphicon glyphicon-remove"></span></button>
@@ -299,7 +305,7 @@
                     {/if}
                     {if $row.caption == "supplier_edit"}
                         {* supplier edit (only for import parts) *}
-                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px" name="supplier_{$row.row_index}" value="{$row.supplier_name}"></td>
+                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:100px;" name="supplier_{$row.row_index}" value="{$row.supplier_name}"></td>
                     {/if}
                     {if $row.caption == "suppliers_radiobuttons"}
                         {* supplier-radiobuttons (only for order parts) *}
@@ -314,7 +320,7 @@
                     {/if}
                     {if $row.caption == "price_edit"}
                         {* price edit *}
-                        <td class="tdrow1"><input type="number" class="form-control input-sm" style="width:45px" min="0" step="any" name="price_{$row.row_index}" value="{$row.price}"></td>
+                        <td class="tdrow1"><input type="number" class="form-control input-sm" style="width:60px;" min="0" step="any" name="price_{$row.row_index}" value="{$row.price}"></td>
                     {/if}
                     {if $row.caption == "average_single_price"}
                         {* average single price for one piece *}
@@ -358,7 +364,7 @@
                     {/if}
                     {if $row.caption == "supplier_partnr_edit"}
                         {* supplier part-nr edit *}
-                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:120px" name="supplier_partnr_{$row.row_index}" value="{$row.supplier_partnr}"></td>
+                        <td class="tdrow1"><input type="text" class="form-control input-sm" style="width:120px;" name="supplier_partnr_{$row.row_index}" value="{$row.supplier_partnr}"></td>
                     {/if}
                     {if $row.caption == "attachements"}
                         {* attachements (names with hyperlinks) *}
@@ -371,25 +377,25 @@
                     {/if}
                     {if $row.caption == "systemupdate_from_version"}
                         {* only for systemupdates *}
-                        <td class="tdrow1{if  $row.stable} backgreen{/if}" style="min-width:100px">
+                        <td class="tdrow1{if  $row.stable} backgreen{/if}" style="min-width:100px;">
                             {$from_version}
                         </td>
                     {/if}
                     {if $row.caption == "systemupdate_to_version"}
                         {* only for systemupdates *}
-                        <td class="tdrow1{if $row.stable} backgreen{/if}" style="min-width:100px">
+                        <td class="tdrow1{if $row.stable} backgreen{/if}" style="min-width:100px;">
                             <b>{$to_version}</b>
                         </td>
                     {/if}
                     {if $row.caption == "systemupdate_release_date"}
                         {* only for systemupdates *}
-                        <td class="tdrow1{if $row.stable} backgreen{/if}" style="min-width:100px">
+                        <td class="tdrow1{if $row.stable} backgreen{/if}" style="min-width:100px;">
                             {$release_date}
                         </td>
                     {/if}
                     {if $row.caption == "systemupdate_changelog"}
                         {* only for systemupdates *}
-                        <td class="tdrow1{if $row.stable} backgreen{/if}" style="min-width:100px">
+                        <td class="tdrow1{if $row.stable} backgreen{/if}" style="min-width:100px;">
                             {foreach $changelog as $change}
                                 {if isset($change.log_item)}&nbsp;&bull;&nbsp;{$change.log_item}<br>{/if}
                             {/foreach}

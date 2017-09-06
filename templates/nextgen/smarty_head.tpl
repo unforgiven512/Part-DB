@@ -3,6 +3,7 @@
 
 {if !isset($ajax_request) || !ajax_request}
 <!DOCTYPE html>
+<!--suppress JSUnresolvedLibraryURL -->
 <html lang="{if isset($lang)}{$lang}{else}en{/if}">
     <head>
         {if isset($http_charset)}<meta charset={$http_charset}>
@@ -71,7 +72,8 @@
         {/foreach}
         {/if} *}
                
-
+        <!-- PHP Debugbar -->
+        {if isset($debugbar_head)}{$debugbar_head nofilter}{/if}
 
 
 
@@ -207,7 +209,7 @@
                     <div class="container-fluid container-progress" id="progressbar" hidden>
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0"
-                                aria-valuemax="100" style="width: 100%">
+                                aria-valuemax="100" style="width: 100%;">
                                 <span>{t}Lade{/t}</span>
                             </div>
                         </div>
@@ -225,15 +227,23 @@
                    <div id="content-data">
 
                        {if isset($messages)}
-                        <div class="alert alert-danger" id="messages">
+                       {assign "alert_style" "alert-info"}
+                       {foreach $messages as $msg}
+                            {if isset($msg.color) && $msg.color == "red"}
+                                {assign "alert_style" "alert-danger"}
+                            {elseif isset($msg.color) && ( $msg.color == "green" || $msg.color == "darkgreen")}
+                                 {assign "alert_style" "alert-success"}
+                            {elseif isset($msg.color) && ($msg.color == "yellow" || $msg.color == "orange")}
+                                 {assign "alert_style" "alert-warning"}
+                            {/if}
+                       {/foreach}
+                        <div class="alert {$alert_style}" id="messages">
                             {if !empty($messages_div_title)}<h4>{$messages_div_title}</h4>{/if}
-                                <form action="" method="post">
+                                <form action="" method="post" class="no-progbar">
                                     {foreach $messages as $msg}
                                         {if isset($msg.text)}
                                             {if isset($msg.strong) && $msg.strong}<strong>{/if}
-                                            {if isset($msg.color)}<span style="color: {$msg.color}; ">{/if}
                                             {$msg.text nofilter}
-                                            {if isset($msg.color)}</span>{/if}
                                             {if isset($msg.strong) && $msg.strong}</strong>{/if}
                                         {/if}
 

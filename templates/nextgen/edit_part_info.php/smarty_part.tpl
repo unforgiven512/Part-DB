@@ -7,14 +7,15 @@
 
 <div class="panel {if $is_new_part}panel-success{else}panel-default{/if}">
     <div class="panel-heading">
-            <i class="fa fa-info-circle" aria-hidden="true"></i> 
             {if !$is_new_part}
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 {t}Ändere Detailinfos von{/t} <b><a href="{$relative_path}show_part_info.php?pid={$pid}">{$name}</a></b>
                 
                 <div style="float: right; display: inline;">
                     {t}ID:{/t} {$pid}
                 </div>
             {else}
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
                 {t}Neues Bauteil erstellen{/t}
             {/if}
     </div>    
@@ -27,7 +28,9 @@
                         {t}Name:{/t}
                     </label>
                     <div class="col-md-10">
-                        <input type="text" name="name" id="name" class="form-control" placeholder="{t}z.B. BC547{/t}" value="{$name}" onkeydown="if (event.keyCode == 13) { document.getElementById('btn_enter').click();}" required>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="{if empty($format_hint)}{t}z.B. BC547{/t}{else}{$format_hint}{/if}"
+                               value="{$name}" onkeydown="if (event.keyCode == 13) { document.getElementById('btn_enter').click();}" required>
+                        {if !empty($format_hint)}<p class="help-block">{t}Hinweis zum Format:{/t} {$format_hint}</p>{/if}
                     </div>
                 </div>
                 <div class="form-group">
@@ -36,7 +39,8 @@
                     </label>
                     {if isset($auto_desc) && $auto_desc}
                     <div class="col-md-8">
-                        <input type="text" id="description" class="form-control" name="description" placeholder="{t}z.B. NPN 45V 0,1A 0,5W{/t}" value="{$description nofilter}">
+                        <input type="text" id="description" class="form-control" name="description"
+                               placeholder="{t}z.B. NPN 45V 0,1A 0,5W{/t}" value="{$description nofilter}">
                     </div>
                     <div class="col-md-2">
                         <button class="btn btn-default" onClick="octoPart();">Auto</button>
@@ -157,10 +161,10 @@
                 <div class="form-group">
                     <div class="col-md-10 col-md-offset-2">
                         {if $is_new_part}
-                            <button type="button" class="btn btn-success submit" name="create_new_part" id="btn_enter">{t}Bauteil erstellen{/t}</button>
+                            <button type="button" class="btn btn-success submit rightclick" name="create_new_part" id="btn_enter">{t}Bauteil erstellen{/t}</button>
                         {else}
                             <input type="hidden" name="pid" value="{$pid}">
-                            <button type="button" name="apply_attributes" class="btn btn-success submit" id="btn_enter">{t}Änderungen übernehmen{/t}</button>
+                            <button type="button" name="apply_attributes" class="btn btn-success submit rightclick" id="btn_enter">{t}Änderungen übernehmen{/t}</button>
                             <button type="button" class="btn btn-danger submit">{t}Änderungen verwerfen{/t}</button>
                         {/if}
                     </div>

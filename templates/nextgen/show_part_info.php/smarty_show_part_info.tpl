@@ -1,5 +1,6 @@
 {locale path="nextgen/locale" domain="partdb"}
 
+<!--suppress Annotator -->
 <div class="panel panel-primary">
     <div class="panel-heading">
         <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
@@ -17,7 +18,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">{t}Name:{/t}</label>
                         <div class="col-sm-9">
-                            {if isset($manufacturer_product_url)}
+                            {if !empty($manufacturer_product_url)}
                                 <a class="form-control-link  hidden-print-href" title="{$manufacturer_product_url}" href="{$manufacturer_product_url}">{$name}</a>
                             {else}
                                 <p class="form-control-static">{$name}</p>
@@ -210,9 +211,17 @@
                 <form action="show_part_label.php" class="hidden-print">
                     <input type="hidden" name="pid" value="{$pid}">
                     <input type="hidden" name="label_generate">
-                    <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-barcode" aria-hidden="true"></i>
+                    <button type="submit" class="btn btn-default btn-block"><i class="fa fa-barcode" aria-hidden="true"></i>
                         {t}Barcode erzeugen{/t}</button>
                 </form>
+
+                <p></p>
+
+                <div class="form-group hidden-print">
+                    <button type="button" class="btn btn-default btn-block" onclick="window.print();"><i class="fa fa-print" aria-hidden="true"></i>
+                        {t}Übersicht drucken{/t}
+                    </button>
+                </div>
 
 
             </div>
@@ -334,7 +343,7 @@
     {else}
         <div class="panel-body">
             {t}Dieses Bauteil hat keine Einkaufsinformationen.{/t}
-            <a class="btn btn-default pull-right hidden-print" href="edit_part_info.php?pid={$pid}">{t}Einkaufsinformationen hinzufügen{/t}</a>
+            <a class="btn btn-default pull-right hidden-print" class="link-anchor" href="edit_part_info.php?pid={$pid}#orderdetails">{t}Einkaufsinformationen hinzufügen{/t}</a>
         </div>
     {/if}
 </div>
@@ -350,7 +359,7 @@
                 <b>{$attach_type.attachement_type}:</b><br>
                 {foreach $attach_type.attachements_loop as $attach}
                     {if $attach.is_picture}
-                        <img src="{$attach.filename}" style="max-height:180px; max-width:180px" class="hoverpic" rel="popover"></a>
+                        <img src="{$attach.filename}" style="max-height:180px; max-width:180px;" class="hoverpic" rel="popover"></a>
                     {else}
                         <a target="_blank" href="{$attach.filename}" class="link-external">{$attach.attachement_name}</a><br>
                     {/if}
@@ -358,8 +367,44 @@
             {/foreach}
         {else}
             {t}Dieses Bauteil besitzt keine Dateianhänge.{/t}
-            <a class="btn btn-default pull-right hidden-print" class=" hidden-print-href" href="edit_part_info.php?pid={$pid}">{t}Dateianhänge hinzufügen{/t}</a>
+            <a class="btn btn-default pull-right hidden-print" class=" hidden-print-href" href="edit_part_info.php?pid={$pid}#attachements">{t}Dateianhänge hinzufügen{/t}</a>
         {/if}
+    </div>
+</div>
+
+<div class="panel panel-default hidden-print">
+    <div class="panel-heading"><i class="fa fa-bolt" aria-hidden="true"></i>
+        {t}Aktionen{/t}
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal no-progbar" action="{$relative_path}edit_part_info.php" method="get">
+            <div class="form-group">
+                <label class="control-label col-sm-2">{t}Bauteil löschen:{/t}</label>
+                <input type="hidden" name="pid" value="{$pid}">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-danger" name="delete_part">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Lösche Teil!
+                    </button>
+                    <div class="checkbox checkbox-danger">
+                        <input type="checkbox" class="styled" id="delete_files_from_hdd" name="delete_files_from_hdd">
+                        <label for="delete_files_from_hdd" class="text-danger">{t}Dateien dieses Bauteiles, die von keinem anderen Bauteil verwendet werden, auch von der Festplatte löschen{/t}</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <p></p>
+
+
+        <form action="{$relative_path}edit_part_info.php" class="form-horizontal no-progbar" method="get">
+            <div class="form-group">
+                <label  class="control-label col-sm-2">{t}Weiteres Bauteil anlegen:{/t}</label>
+                <input type="hidden" name="pid" value="{$pid}">
+                <div class="col-sm-10">
+                    <button class="btn btn-primary" type="submit" name="add_one_more_part"><i class="fa fa-plus-square" aria-hidden="true"></i> {t}Neues Bauteil erfassen{/t}</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

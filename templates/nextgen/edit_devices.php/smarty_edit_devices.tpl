@@ -1,7 +1,7 @@
 {locale path="nextgen/locale" domain="partdb"}
 {if isset($refresh_navigation_frame) && $refresh_navigation_frame}
     <script type="text/javascript">
-        location.reload();
+        AjaxUI.getInstance().updateTrees();
     </script>
 {/if}
 
@@ -42,7 +42,7 @@
                             <strong>{t}Neue Baugruppe hinzufügen:{/t}</strong>
                         {else}
                             {if isset($name)}
-                                <strong>{t}Baugruppe bearbeiten:{/t}</strong>
+                                <strong>{t}Baugruppe bearbeiten:{/t} <a href="show_device_parts.php?device_id={$id}">{$name}</a></strong>
                             {else}
                                 <strong>{t}Es ist keine Baugruppe angewählt!{/t}</strong>
                             {/if}
@@ -59,7 +59,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-3">{t}Name*:{/t}</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="name" value="{$name}" required>
+                        <input type="text" class="form-control" name="name" value="{$name}" placeholder="{t}z.B. Transistortester{/t}" required>
                     </div>
                 </div>
             
